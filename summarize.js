@@ -1,5 +1,6 @@
 const GithubAPI = require("github")
 const program = require('commander');
+const moment = require('moment');
 
 const github = new GithubAPI()
 
@@ -8,14 +9,15 @@ const getOwnerAndRepo = repoName => ({
   repo: repoName.match(/\/([a-z0-9-_]+)$/)[1]
 })
 
-const fetchInfo = async username => {
+const fetchInfo = async (username, yesterday) => {
   let activity = await github.activity.getEventsForUser({
-    username
+    username,
+    per_page: 100,
   })
 
   let pushesToMaster = activity.data.filter(
     event =>
-      event.type === "PushEvent" && event.payload.ref === "refs/heads/master"
+      event.type === "PushEvent" && event.payload.ref === "refs/heads/master" && moment(event.created_at).isAfter(yesterday)
   )
 
   let commits = await Promise.all(
@@ -42,4 +44,15 @@ const fetchInfo = async username => {
   })
 }
 
-fetchInfo('aliceriot')
+program.description("Summarize your recent github activity").option('-u, --username', 'username to check')
+  .option('-s, --since', 'time to check since (if not yesterday). format: "MM-DD-YYYY"')
+  .parse(process.argv)
+
+if (!program.username) {
+  program.help();
+} else {
+  const yesterday = program.since ? moment(program.since).startOf('day') :
+    moment().subtract(1, 'day').startOf('day')
+
+  fetchInfo(program.username, yesterday);
+}
