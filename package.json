@@ -15,6 +15,7 @@
   "dependencies": {
     "commander": "^2.11.0",
     "github": "^9.2.0",
+    "moment": "^2.18.1",
     "prettier": "^1.5.3"
   }
 }
