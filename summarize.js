@@ -1,6 +1,7 @@
 const GithubAPI = require("github")
 const program = require("commander")
 const moment = require("moment")
+const fs = require('fs');
 
 const github = new GithubAPI()
 
@@ -48,9 +49,9 @@ const fetchInfo = async (username, yesterday) => {
 
 program
   .description("Summarize your recent github activity")
-  .option("-u, --username", "username to check")
+  .option("-u, --username <code>", "username to check")
   .option(
-    "-s, --since",
+    "-s, --since <code>",
     'time to check since (if not yesterday). format: "MM-DD-YYYY"'
   )
   .parse(process.argv)
