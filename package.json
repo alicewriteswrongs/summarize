@@ -12,6 +12,7 @@
   "author": "Alice Pote",
   "license": "ISC",
   "dependencies": {
-    "github": "^9.2.0"
+    "github": "^9.2.0",
+    "prettier": "^1.5.3"
   }
 }
