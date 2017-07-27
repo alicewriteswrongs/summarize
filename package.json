@@ -4,7 +4,8 @@
   "description": "Your activity on Github, summarized!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fmt": "prettier --no-semi --write summarize.js"
   },
   "keywords": [
     "github"
