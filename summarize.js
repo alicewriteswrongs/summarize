@@ -59,7 +59,7 @@ if (!program.username) {
   program.help()
 } else {
   const yesterday = program.since
-    ? moment(program.since).startOf("day")
+    ? moment(program.since, "MM/DD/YYYY").startOf("day")
     : moment().subtract(1, "day").startOf("day")
 
   fetchInfo(program.username, yesterday)
