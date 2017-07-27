@@ -1,7 +1,6 @@
 const GithubAPI = require("github")
 const program = require("commander")
 const moment = require("moment")
-const fs = require('fs');
 
 const github = new GithubAPI()
 
