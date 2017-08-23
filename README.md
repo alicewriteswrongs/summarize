@@ -3,11 +3,18 @@
 This just prints out a quick summary of the commits you wrote to `master`
 on github in the last day. It is very hacky.
 
-Use:
+## Install
+
+do
 
 ```
-yarn install
-node summarize --username ${your username}
+npm install -g github-summarize
+```
+
+## Use
+
+```
+gh-summarize --username ${your username}
 ```
 
 By default it filters commits that happened since yesterday, but if you

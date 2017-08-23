@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const GithubAPI = require("github")
 const program = require("commander")
 const moment = require("moment")
