@@ -1,6 +1,6 @@
 {
   "name": "github-summarize",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your activity on Github, summarized!",
   "main": "summarize.js",
   "scripts": {
@@ -18,7 +18,9 @@
   "dependencies": {
     "commander": "^2.11.0",
     "github": "^9.2.0",
-    "moment": "^2.18.1",
+    "moment": "^2.18.1"
+  },
+  "devDependencies": {
     "prettier": "^1.5.3"
   }
 }
