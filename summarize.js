@@ -1,52 +1,9 @@
 #!/usr/bin/env node
 
-const GithubAPI = require("github")
 const program = require("commander")
 const moment = require("moment")
 
-const github = new GithubAPI()
-
-const getOwnerAndRepo = repoName => ({
-  owner: repoName.match(/^([a-z0-9-_]+)\//)[1],
-  repo: repoName.match(/\/([a-z0-9-_]+)$/)[1]
-})
-
-const fetchInfo = async (username, yesterday) => {
-  let activity = await github.activity.getEventsForUser({
-    username,
-    per_page: 100
-  })
-
-  let pushesToMaster = activity.data.filter(
-    event =>
-      event.type === "PushEvent" &&
-      event.payload.ref === "refs/heads/master" &&
-      moment(event.created_at).isAfter(yesterday)
-  )
-
-  let commits = await Promise.all(
-    pushesToMaster.map(async event => {
-      const { owner, repo } = getOwnerAndRepo(event.repo.name)
-
-      const commit = await github.gitdata.getCommit({
-        sha: event.payload.head,
-        repo,
-        owner
-      })
-
-      return {
-        message: commit.data.message,
-        repo: repo
-      }
-    })
-  )
-
-  console.log("Yesterday I merged the following:\n")
-
-  commits.forEach(({ message, repo }) => {
-    console.log(`- ${message.split("\n")[0]} (${repo})`)
-  })
-}
+const  fetchInfo  = require("./src/activity.js")
 
 program
   .description("Summarize your recent github activity")
