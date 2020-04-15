@@ -16,6 +16,7 @@
   "author": "Alice Pote",
   "license": "ISC",
   "dependencies": {
+    "@octokit/graphql": "^4.3.1",
     "commander": "^2.11.0",
     "github": "^9.2.0",
     "moment": "^2.18.1"
