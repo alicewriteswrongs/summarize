@@ -24,7 +24,7 @@ const getOwnerAndRepo = repoName => ({
 const fetchActivity = async (username, yesterday) => {
   const activity = await github.activity.getEventsForUser({
     username,
-    per_page: 200
+    per_page: 100
   })
 
   return activity.data.filter(event =>
@@ -101,7 +101,6 @@ const formatReviews = async (activity ) => {
 
 const fetchInfo = async (username, yesterday) => {
   const activity = await fetchActivity(username, yesterday)
-
   console.log(activity)
 
   const merges = await formatMerges(activity )
