@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const GithubAPI = require("github")
+const { Octokit } = require("@octokit/rest")
 const program = require("commander")
 const moment = require("moment")
 
-const github = new GithubAPI()
+const github = new Octokit()
 
 // the different kinds of events that can show up in the activity stream
 const PullRequestReviewCommentEvent = "PullRequestReviewCommentEvent"
@@ -22,9 +22,9 @@ const getOwnerAndRepo = repoName => ({
 })
 
 const fetchActivity = async (username, yesterday) => {
-  const activity = await github.activity.getEventsForUser({
+  const activity = await github.activity.listEventsForAuthenticatedUser({
     username,
-    per_page: 100
+    per_page: 300
   })
 
   return activity.data.filter(event =>
@@ -98,16 +98,28 @@ const formatReviews = async (activity ) => {
   }
 }
 
+let activity
+let merges
+let reviews
 
-const fetchInfo = async (username, yesterday) => {
-  const activity = await fetchActivity(username, yesterday)
-  console.log(activity)
+// const fetchInfo = async (username, yesterday) => {
+const fetchInfo = async (username ) => {
+  let yesterday = moment().subtract(1, "day").startOf("day")
+  activity = await fetchActivity(username, yesterday)
+  // console.log(activity)
 
-  const merges = await formatMerges(activity )
-  console.log(merges)
+  merges = await formatMerges(activity )
+  // console.log(merges)
 
-  const reviews = await formatReviews(activity)
-  console.log(reviews)
+  reviews = await formatReviews(activity)
+  // console.log(reviews)
 }
 
-module.exports = fetchInfo
+// module.exports = {
+//   fetchInfo,
+// activity,
+// merges,
+// reviews
+// }
+
+
